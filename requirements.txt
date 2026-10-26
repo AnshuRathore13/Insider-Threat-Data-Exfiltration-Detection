@@ -1,0 +1,26 @@
+# Core Data Manipulation & Mathematics
+pandas>=2.1.0,<3.0.0
+numpy>=1.26.0,<2.0.0
+
+# Machine Learning & Anomaly Detection
+scikit-learn>=1.3.0,<1.6.0
+xgboost>=2.0.0,<3.0.0
+
+# Graph / Network Analysis for Insider Threat Lateral Movement & Communication
+networkx>=3.2.0,<4.0.0
+
+# Explainable AI (XAI)
+shap>=0.44.0,<0.47.0
+
+# Visualization & Reporting
+matplotlib>=3.8.0,<4.0.0
+seaborn>=0.13.0,<0.14.0
+
+# Interactive Threat Triage Application
+streamlit>=1.30.0,<2.0.0
+
+# Configuration & Environment Management
+python-dotenv>=1.0.0
+
+# Testing & Quality Assurance
+pytest>=7.4.0,<9.0.0
