@@ -3,7 +3,7 @@
 Transforms cleaned access telemetry into high-dimensional feature matrices while
 strictly preventing temporal lookahead leakage and target leakage.
 
-Key Principles:
+Key Principles: 
 1. ONE ROW PER EVENT: Stable row alignment with `targets.csv`.
 2. STRICTLY PAST-ONLY: User historical features (counts, velocity, deviations)
    only incorporate events occurring strictly before the current event's timestamp.
