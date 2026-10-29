@@ -122,9 +122,33 @@ Validate schema compliance, missing values, duplicates, and volume distributions
 python -m src.data.validate_data --input data/raw/access_logs.csv
 ```
 
-### 5. Run Test Suite
+### 5. Preprocess & Clean Telemetry (Phase 2)
 
-Run automated unit and integration tests using Pytest:
+Execute auditable cleaning, validate non-negative transfer sizes, drop invalid timestamps/duplicates, and normalize categorical values:
+
+```powershell
+python -m src.data.preprocess --input data/raw/access_logs.csv --output data/processed/clean_access_logs.csv --report reports/data_quality_report.json
+```
+
+### 6. Construct NetworkX Graph & Descriptive Topology (Phase 2)
+
+Compute past-only bipartite graph features and generate the enterprise access network topology visualization:
+
+```powershell
+python -m src.features.build_graph --input data/processed/clean_access_logs.csv --output-figure reports/figures/access_graph.png
+```
+
+### 7. Extract Behavioral, Temporal & Graph Features (Phase 2)
+
+Engineer 40 high-dimensional features with zero future-data leakage and strict target isolation:
+
+```powershell
+python -m src.features.build_features --input data/processed/clean_access_logs.csv --features-out data/processed/features.csv --targets-out data/processed/targets.csv --plot-out reports/figures/feature_distributions.png
+```
+
+### 8. Run Automated Pytest Test Suite
+
+Execute the complete 28-test verification suite covering preprocessing, schema rules, past-only temporal constraints, cold-start resilience, and graph metrics:
 
 ```powershell
 pytest -v
@@ -137,7 +161,7 @@ pytest -v
 The synthetic access logs (`data/raw/access_logs.csv`) include an `is_anomaly` column representing synthetic ground truth.
 
 > [!IMPORTANT]
-> **Ground-Truth Safeguard**: The `is_anomaly` column is generated solely via controlled simulation rules to evaluate detection performance. It **must never** be included in model training matrices or feature engineering pipelines. Doing so would cause label leakage and invalidate model validity.
+> **Ground-Truth Safeguard**: The `is_anomaly` column is generated solely via controlled simulation rules to evaluate detection performance. It **must never** be included in model training matrices or feature engineering pipelines. Doing so would cause label leakage and invalidate model validity. In our pipeline, `is_anomaly` is strictly quarantined in `data/processed/targets.csv`.
 
 In production cybersecurity environments, absolute ground-truth labels are rarely available due to unconfirmed incidents, reporting delays, and stealthy adversaries. Synthetic benchmark labels provide a controlled baseline to measure detection recall, precision, and alert fatigue.
 
@@ -148,8 +172,7 @@ In production cybersecurity environments, absolute ground-truth labels are rarel
 | Phase | Milestone | Status |
 | :--- | :--- | :---: |
 | **Phase 1** | Repository foundation, reproducible data generator, schema validation, Pytest suite | **Completed** |
-| **Phase 2** | Exploratory Data Analysis (EDA) & baseline statistical profiling | *Next* |
-| **Phase 3** | Behavioral & bipartite network feature engineering (NetworkX) | *Upcoming* |
-| **Phase 4** | Anomaly detection (Isolation Forest) & Supervised classification (XGBoost) | *Upcoming* |
-| **Phase 5** | Model explainability (SHAP) & Security cost evaluation (Precision@K) | *Upcoming* |
-| **Phase 6** | Streamlit SOC analyst investigation dashboard | *Upcoming* |
+| **Phase 2** | Data cleaning, temporal & behavioral feature engineering, past-only NetworkX graph features | **Completed** |
+| **Phase 3** | Anomaly detection (Isolation Forest) & Supervised classification (XGBoost) | *Next* |
+| **Phase 4** | Model explainability (SHAP) & Security cost evaluation (Precision@K) | *Upcoming* |
+| **Phase 5** | Streamlit SOC analyst investigation dashboard | *Upcoming* |
