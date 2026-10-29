@@ -1,7 +1,7 @@
 """NetworkX Graph Analytics for Insider Threat and Exfiltration Detection.
 
 This module constructs bipartite/tripartite access graphs linking:
-    Users <---> Files <---> Destinations
+    Users <---> Files <---> Destinations 
 
 Key Architectural Principles:
 1. PREDICTIVE FEATURES ARE STRICTLY PAST-ONLY:
