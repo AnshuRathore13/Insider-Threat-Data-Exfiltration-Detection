@@ -53,6 +53,8 @@ models/*
 !models/.gitkeep
 
 # Generated figures and reports
+reports/*
+!reports/.gitkeep
 reports/figures/*
 !reports/figures/.gitkeep
 
@@ -79,3 +81,9 @@ Thumbs.db
 
 # Streamlit local runtime state
 .streamlit/
+
+#interview file
+/docs/interview_notes/
+
+
+
